@@ -1,0 +1,33 @@
+{
+  "name": "my-first-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomasvlach/my-first-service.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomasvlach/my-first-service/issues"
+  },
+  "homepage": "https://github.com/tomasvlach/my-first-service#readme",
+  "devDependencies": {
+    "@types/aws-sdk": "2.7.0",
+    "@types/jest": "^25.1.4",
+    "@types/node": "^7.0.5",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.1",
+    "tslint": "^5.5.0",
+    "tslint-config-standard": "^6.0.1",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.7.0",
+    "uuid": "^3.1.0"
+  }
+}

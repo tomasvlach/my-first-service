@@ -1,15 +1,18 @@
-'use strict';
-Object.defineProperty(exports, "__esModule", { value: true });
-const aws_sdk_1 = require("aws-sdk");
-const dynamoDb = new aws_sdk_1.DynamoDB.DocumentClient();
+'use strict'
+
+import { DynamoDB } from 'aws-sdk'
+
+const dynamoDb = new DynamoDB.DocumentClient()
+
 const create = (event, context, callback) => {
-    var data = null;
+    var data = null
+    
     try {
-        data = JSON.parse(event.body);
+        data = JSON.parse(event.body)
+    } catch (e) {
+        console.error("Error when parsing body. " + e)
     }
-    catch (e) {
-        console.error("Error when parsing body. " + e);
-    }
+
     const params = {
         TableName: process.env.DYNAMODB_TABLE,
         Item: {
@@ -18,29 +21,33 @@ const create = (event, context, callback) => {
             userid: data['user-id'],
             vatnumber: data['vat-number']
         }
-    };
+    }
+
     // write the todo to the database
     dynamoDb.put(params, (error, result) => {
         // handle potential errors
         if (error) {
-            console.error(error);
-            callback(new Error('Couldn\'t create the todo item.'));
-            return;
+            console.error(error)
+            callback(new Error('Couldn\'t create the todo item.'))
+            return
         }
+
         // create a response
         const response = {
             statusCode: 200,
             body: "Added successfully"
-        };
-        callback(null, response);
-    });
-};
-exports.create = create;
+        }
+        callback(null, response)
+    })
+}
+
 const ahoj = (a) => {
-    return a * a;
-};
-exports.ahoj = ahoj;
+    return a*a;
+}
+
 module.exports = {
     create: create,
     ahoj: ahoj
-};
+}
+
+export { create, ahoj };
