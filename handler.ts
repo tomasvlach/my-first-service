@@ -2,26 +2,16 @@
 
 import { DynamoDB } from 'aws-sdk'
 
-const dynamoDb = new DynamoDB.DocumentClient()
+var dynamoDb = new DynamoDB.DocumentClient()
+
+// TODO: This is a hack to set a mock of DynamoDB.DocumentClient. This needs to be replaced 
+// with proper mock creation, that does not require exposing public function just to set the mock.
+const setDocumentClient = (client) => {
+    dynamoDb = client;
+}
 
 const create = (event, context, callback) => {
-    var data = null
-    
-    try {
-        data = JSON.parse(event.body)
-    } catch (e) {
-        console.error("Error when parsing body. " + e)
-    }
-
-    const params = {
-        TableName: process.env.DYNAMODB_TABLE,
-        Item: {
-            id: data.id,
-            name: data.name,
-            userid: data['user-id'],
-            vatnumber: data['vat-number']
-        }
-    }
+    const params = parseDataIntoParams(event.body)
 
     // write the todo to the database
     dynamoDb.put(params, (error, result) => {
@@ -41,13 +31,32 @@ const create = (event, context, callback) => {
     })
 }
 
-const ahoj = (a) => {
-    return a*a;
+/*
+Parses the body containing JSON, and transforms it into params that can be used in DynamoDB operations.
+*/
+const parseDataIntoParams = (body) => {
+    console.log("Create")
+    console.log(body)
+    const data = JSON.parse(body)
+
+    console.log("Parsed")
+
+    const params = {
+        TableName: process.env.DYNAMODB_TABLE,
+        Item: {
+            id: data['id'],
+            name: data['name'],
+            userid: data['user-id'],
+            vatnumber: data['vat-number']
+        }
+    }
+
+    return params;
 }
 
 module.exports = {
     create: create,
-    ahoj: ahoj
+    setDocumentClient: setDocumentClient
 }
 
-export { create, ahoj };
+export { create, setDocumentClient };

@@ -1,20 +1,21 @@
 import * as handler from './handler';
 
-test('basic', () => {
-    expect(handler.ahoj(2)).toBe(4);
-});
+test('handlePutResponse', done => {
+    const callback = (error, result) => {
+        done();
+    }
 
-// test('create', done => {
-//     const event = {
-//         body: `
-//             {"id":"UID-123","name":"robert","vat-number":"DE123456","user-id":"gid:robert"}
-//         `
-//     }
-//     const callback = (result) => {
-//         console.log(result);
-//         done();
-//     }
-//     // expect(handler.create(event, null, callback)).toBeTruthy();
-//     handler.create(event, null, callback);
-// })
+    const clientMock = {
+        put: (params, callback) => {
+            callback(null, null);
+        }
+    }
+
+    const event = {
+        body: '{"id":"UID-123","name":"robert","vat-number":"DE123456","user-id":"gid:robert"}'
+    }
+
+    handler.setDocumentClient(clientMock);
+    handler.create(event, null, callback);
+})
 
