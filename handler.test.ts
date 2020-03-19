@@ -1,6 +1,6 @@
 import * as handler from './handler';
 
-test('handlePutResponse', done => {
+test('create', done => {
     const callback = (error, result) => {
         done();
     }
