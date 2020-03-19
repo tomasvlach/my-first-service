@@ -64,3 +64,13 @@ Body example:
     "user-id":"gid:robert"
 }
 ````
+
+# Implementation notes
+
+In general, I took a simplistic approach when implementing this service (which is what I would do in general when prototyping something new). Next steps would be to iterate on it and improve it.
+
+## Unit testing
+The unit test is super simplistic. I had to resort to a small hack in order to be able to unit test the command handler - the handler module exports an "internal" method, that is used for mocking aws library. I am sure it is possible to mock this in a much cleaner way, however I wasn't abel to get it working in a reasonable time frame, so I used this hack. In real system, this is something I would attempt to fix once the correct approach was found.
+
+## Error handling
+The service does not implement any sophisticated error handling. In real system, I would add more logic related to error handling and logging, to allow for better tracability of errors.
