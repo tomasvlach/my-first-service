@@ -1,4 +1,4 @@
-# Overview
+# Overview 
 
 This is a simple service, that exposes one unauthenticated REST endpoint /hello and accepts POST http method invocation. When invoked, it will create a new entry in an underlying DynamoDB database.
 
